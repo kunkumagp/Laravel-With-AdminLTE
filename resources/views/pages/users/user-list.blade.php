@@ -1,10 +1,14 @@
 @extends('adminlte::page')
 
-@section('title', 'AdminLTE')
+@section('title', $title)
 
 @section('content_header')
 <h1>User List 
-<a href="" class="btn btn-success">Create a new user</a></h1>
+<a href="{{route('user-create')}}" class="btn btn-success">Create a new user</a></h1>
+<ol class="breadcrumb float-sm-right">
+  <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
+  <li class="breadcrumb-item active">Users</li>
+</ol>
 @stop
 
 @section('content')
@@ -22,9 +26,9 @@
                     <th>ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>phone</th>
-                    <th>gender</th>
-                    <th>email</th>
+                    <th>Phone</th>
+                    <th>Gender</th>
+                    <th>Email</th>
                     <th>User Role</th>
                   </tr>
                   </thead>
@@ -32,10 +36,10 @@
                   @foreach($users as $user)
                   <tr>
                     <td>{{$user->id}}</td>
-                    <td>{{$user->first_name}}</td>
-                    <td>{{$user->last_name}}</td>
+                    <td>{{ucfirst(trans($user->first_name))}}</td>
+                    <td>{{ucfirst(trans($user->last_name))}}</td>
                     <td>{{$user->phone}}</td>
-                    <td>{{$user->gender}}</td>
+                    <td><?php if($user->gender!=null){echo ucfirst(trans($user->gender));} ?></td>
                     <td>{{$user->email}}</td>
                     <td><?php if(sizeof($user->roles) > 0){echo $user->roles[0]->label;}else {echo '-';} ?></td>
                   </tr>

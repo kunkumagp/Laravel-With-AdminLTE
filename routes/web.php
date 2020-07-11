@@ -20,4 +20,6 @@ Route::group(['middleware' => 'auth:' . UserRoleConstants::Admin], function() {
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
     
     Route::get('/users', 'UserController@index')->name('users');
+    Route::get('/users/create-new', 'UserController@create')->name('user-create');
+    Route::post('/users/create-new', 'UserController@store')->name('user-create-submit');
 });

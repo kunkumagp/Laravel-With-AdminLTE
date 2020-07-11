@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use App\User;
 use App\UserRole;
-
 
 class UserController extends Controller
 {
@@ -18,7 +18,11 @@ class UserController extends Controller
     {
         $users = User::with('roles')->get();
         // dd($users);
-        return view('pages.users.user-list')->with('users', $users);
+        return view('pages.users.user-list', [
+            'users' => $users,
+            'title' => 'Users List'
+        ]);
+
     }
 
     /**
@@ -28,7 +32,14 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+
+        $userRoles = UserRole::all();
+        // dd($userRoles);
+        // dd('user-create');
+        return view('pages.users.user-create', [
+            'userRoles'=>$userRoles,
+            'title' => 'Users Create'
+        ]);
     }
 
     /**
@@ -39,7 +50,31 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $newUser = new User();
+            $newUser->first_name = $request->firstName;
+            $newUser->last_name = $request->lastName;
+            $newUser->address_1 = $request->addres1;
+            $newUser->address_2 = $request->addres2;
+            $newUser->city = $request->city;
+            $newUser->email = $request->email;
+            $newUser->gender = $request->gender;
+            $newUser->save();
+            $newUser->roles()->attach($request->userRole);
+            
+            Alert::success('Success Title', 'Success Message');
+            // alert()->success('SuccessAlert','Lorem ipsum dolor sit amet.');
+            
+            $userRoles = UserRole::all();
+
+            return view('pages.users.user-create', [
+                'userRoles'=>$userRoles,
+                'title' => 'Users Create'
+            ]);
+        } catch (\Throwable $th) {
+            Alert::error('Error Title', 'Error Message');
+            return $th;
+        }
     }
 
     /**
