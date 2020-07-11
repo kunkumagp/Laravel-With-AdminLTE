@@ -10,6 +10,11 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public function roles() {
+        return $this->belongsToMany(UserRole::class);
+    }
+
+
     /**
      * The attributes that are mass assignable.
      *
