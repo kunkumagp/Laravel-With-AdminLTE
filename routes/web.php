@@ -17,6 +17,7 @@ Route::post('/login-submit', 'LoginController@loginSubmit')->name('login-submit'
 
 Route::group(['middleware' => 'auth:' . UserRoleConstants::Admin], function() {
     Route::get('/logout', 'LoginController@logout')->name('logout');
-
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
+    
+    Route::get('/users', 'UserController@index')->name('users');
 });

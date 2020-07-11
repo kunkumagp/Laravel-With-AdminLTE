@@ -90,9 +90,14 @@ return [
     'menu' => [
         'MAIN NAVIGATION',
         [
-            'text' => 'Dashboard',
-            'url' => 'dashboard',
-            'icon' => 'dashboard',
+          'text' => 'Dashboard',
+          'url' => 'dashboard',
+          'icon' => 'dashboard',
+        ],
+        [
+          'text' => 'Users',
+          'url' => 'users',
+          'icon' => 'users',
         ],
     ],
     /*
